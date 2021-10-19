@@ -1,0 +1,889 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SchoolBookModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GradeSyllabusPairings">
+          <Key>
+            <PropertyRef Name="GradeID" />
+          </Key>
+          <Property Name="GradeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Grade" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="HomeWork">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="HomeWorkID" Type="int" Nullable="false" />
+          <Property Name="Questions" Type="nvarchar(max)" />
+          <Property Name="Answers" Type="nvarchar(max)" />
+          <Property Name="IsCorrect" Type="int" />
+          <Property Name="Percentage_Correct" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="SubSyllabusID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentAnswers" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="HomeWork_Assign">
+          <Key>
+            <PropertyRef Name="HomeWorkID" />
+          </Key>
+          <Property Name="SubSyllabusID" Type="int" Nullable="false" />
+          <Property Name="NoOfQuestions" Type="int" Nullable="false" />
+          <Property Name="HomeWorkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="HomeworkParameters">
+          <Key>
+            <PropertyRef Name="ParametersID" />
+          </Key>
+          <Property Name="ParametersID" Type="int" Nullable="false" />
+          <Property Name="NoOfTerms" Type="int" />
+          <Property Name="NoOfLawsInUse" Type="int" />
+          <Property Name="HighestNumber" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="HighestNumberPow" Type="int" />
+          <Property Name="ComplexityID" Type="int" />
+          <Property Name="ArithOrGeom" Type="int" />
+          <Property Name="highest_a" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="highest_n" Type="int" />
+          <Property Name="highest_d" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="highest_r" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="DegreeOfRemoval" Type="int" />
+          <Property Name="maxSides" Type="int" />
+          <Property Name="AngleOrSide" Type="int" />
+        </EntityType>
+        <EntityType Name="HomeWorkParametersStudentPairings">
+          <Key>
+            <PropertyRef Name="PairingID" />
+          </Key>
+          <Property Name="PairingID" Type="int" Nullable="false" />
+          <Property Name="ParametersID" Type="int" Nullable="false" />
+          <Property Name="HomeWorkID" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PairingStudentPairings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PairingID" Type="int" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="StudentTables">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ImgUrl" Type="varchar(max)" />
+          <Property Name="AreaCode" Type="int" />
+          <Property Name="EmailAddress" Type="varchar(max)" />
+          <Property Name="PlaceKey" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SubSyllabus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="SyllabusID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="Syllabus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="400" Nullable="false" />
+          <Property Name="GradeID" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TutorStudentRelationships">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TutorID" Type="int" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TutorTables">
+          <Key>
+            <PropertyRef Name="TutorID" />
+          </Key>
+          <Property Name="TutorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ImgUrl" Type="varchar(max)" />
+          <Property Name="AreaCode" Type="int" />
+          <Property Name="EmailAddress" Type="varchar(max)" />
+          <Property Name="PlaceKey" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="YouTubeSpecifics">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubSyllabusID" Type="int" Nullable="false" />
+          <Property Name="ImageLink" Type="varchar(max)" />
+          <Property Name="VideoLink" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK__HomeWork___SubSy__35BCFE0A">
+          <End Role="SubSyllabus" Type="Self.SubSyllabus" Multiplicity="1" />
+          <End Role="HomeWork_Assign" Type="Self.HomeWork_Assign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubSyllabus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HomeWork_Assign">
+              <PropertyRef Name="SubSyllabusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HomeWorkP__Param__286302EC">
+          <End Role="HomeworkParameters" Type="Self.HomeworkParameters" Multiplicity="1" />
+          <End Role="HomeWorkParametersStudentPairings" Type="Self.HomeWorkParametersStudentPairings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HomeworkParameters">
+              <PropertyRef Name="ParametersID" />
+            </Principal>
+            <Dependent Role="HomeWorkParametersStudentPairings">
+              <PropertyRef Name="ParametersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubSyllab__Sylla__2D27B809">
+          <End Role="Syllabus" Type="Self.Syllabus" Multiplicity="1" />
+          <End Role="SubSyllabus" Type="Self.SubSyllabus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Syllabus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SubSyllabus">
+              <PropertyRef Name="SyllabusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HomeWork_HomeWork_Assign">
+          <End Role="HomeWork_Assign" Type="Self.HomeWork_Assign" Multiplicity="1" />
+          <End Role="HomeWork" Type="Self.HomeWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HomeWork_Assign">
+              <PropertyRef Name="HomeWorkID" />
+            </Principal>
+            <Dependent Role="HomeWork">
+              <PropertyRef Name="HomeWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HomeWork_SubSyllabus">
+          <End Role="SubSyllabus" Type="Self.SubSyllabus" Multiplicity="1" />
+          <End Role="HomeWork" Type="Self.HomeWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubSyllabus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HomeWork">
+              <PropertyRef Name="SubSyllabusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HomeWorkParametersStudentPairings_HomeWork_Assign">
+          <End Role="HomeWork_Assign" Type="Self.HomeWork_Assign" Multiplicity="1" />
+          <End Role="HomeWorkParametersStudentPairings" Type="Self.HomeWorkParametersStudentPairings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HomeWork_Assign">
+              <PropertyRef Name="HomeWorkID" />
+            </Principal>
+            <Dependent Role="HomeWorkParametersStudentPairings">
+              <PropertyRef Name="HomeWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PairingStudentPairing_HomeWorkParametersStudentPairings">
+          <End Role="HomeWorkParametersStudentPairings" Type="Self.HomeWorkParametersStudentPairings" Multiplicity="1" />
+          <End Role="PairingStudentPairings" Type="Self.PairingStudentPairings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HomeWorkParametersStudentPairings">
+              <PropertyRef Name="PairingID" />
+            </Principal>
+            <Dependent Role="PairingStudentPairings">
+              <PropertyRef Name="PairingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PairingStudentPairing_StudentTable">
+          <End Role="StudentTables" Type="Self.StudentTables" Multiplicity="1" />
+          <End Role="PairingStudentPairings" Type="Self.PairingStudentPairings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentTables">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="PairingStudentPairings">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Syllabus_GradeSyllabusPairing">
+          <End Role="GradeSyllabusPairings" Type="Self.GradeSyllabusPairings" Multiplicity="0..1" />
+          <End Role="Syllabus" Type="Self.Syllabus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradeSyllabusPairings">
+              <PropertyRef Name="GradeID" />
+            </Principal>
+            <Dependent Role="Syllabus">
+              <PropertyRef Name="GradeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorStudentRelationship_StudentTable">
+          <End Role="StudentTables" Type="Self.StudentTables" Multiplicity="1" />
+          <End Role="TutorStudentRelationships" Type="Self.TutorStudentRelationships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentTables">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="TutorStudentRelationships">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorStudentRelationship_TutorTable">
+          <End Role="TutorTables" Type="Self.TutorTables" Multiplicity="1" />
+          <End Role="TutorStudentRelationships" Type="Self.TutorStudentRelationships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TutorTables">
+              <PropertyRef Name="TutorID" />
+            </Principal>
+            <Dependent Role="TutorStudentRelationships">
+              <PropertyRef Name="TutorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_YouTubeSpecific_SubSyllabus">
+          <End Role="SubSyllabus" Type="Self.SubSyllabus" Multiplicity="1" />
+          <End Role="YouTubeSpecifics" Type="Self.YouTubeSpecifics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubSyllabus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="YouTubeSpecifics">
+              <PropertyRef Name="SubSyllabusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolBookModelStoreContainer">
+          <EntitySet Name="GradeSyllabusPairings" EntityType="Self.GradeSyllabusPairings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HomeWork" EntityType="Self.HomeWork" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HomeWork_Assign" EntityType="Self.HomeWork_Assign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HomeworkParameters" EntityType="Self.HomeworkParameters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HomeWorkParametersStudentPairings" EntityType="Self.HomeWorkParametersStudentPairings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PairingStudentPairings" EntityType="Self.PairingStudentPairings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentTables" EntityType="Self.StudentTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubSyllabus" EntityType="Self.SubSyllabus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Syllabus" EntityType="Self.Syllabus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TutorStudentRelationships" EntityType="Self.TutorStudentRelationships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TutorTables" EntityType="Self.TutorTables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YouTubeSpecifics" EntityType="Self.YouTubeSpecifics" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__HomeWork___SubSy__35BCFE0A" Association="Self.FK__HomeWork___SubSy__35BCFE0A">
+            <End Role="SubSyllabus" EntitySet="SubSyllabus" />
+            <End Role="HomeWork_Assign" EntitySet="HomeWork_Assign" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HomeWorkP__Param__286302EC" Association="Self.FK__HomeWorkP__Param__286302EC">
+            <End Role="HomeworkParameters" EntitySet="HomeworkParameters" />
+            <End Role="HomeWorkParametersStudentPairings" EntitySet="HomeWorkParametersStudentPairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubSyllab__Sylla__2D27B809" Association="Self.FK__SubSyllab__Sylla__2D27B809">
+            <End Role="Syllabus" EntitySet="Syllabus" />
+            <End Role="SubSyllabus" EntitySet="SubSyllabus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HomeWork_HomeWork_Assign" Association="Self.FK_HomeWork_HomeWork_Assign">
+            <End Role="HomeWork_Assign" EntitySet="HomeWork_Assign" />
+            <End Role="HomeWork" EntitySet="HomeWork" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HomeWork_SubSyllabus" Association="Self.FK_HomeWork_SubSyllabus">
+            <End Role="SubSyllabus" EntitySet="SubSyllabus" />
+            <End Role="HomeWork" EntitySet="HomeWork" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HomeWorkParametersStudentPairings_HomeWork_Assign" Association="Self.FK_HomeWorkParametersStudentPairings_HomeWork_Assign">
+            <End Role="HomeWork_Assign" EntitySet="HomeWork_Assign" />
+            <End Role="HomeWorkParametersStudentPairings" EntitySet="HomeWorkParametersStudentPairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PairingStudentPairing_HomeWorkParametersStudentPairings" Association="Self.FK_PairingStudentPairing_HomeWorkParametersStudentPairings">
+            <End Role="HomeWorkParametersStudentPairings" EntitySet="HomeWorkParametersStudentPairings" />
+            <End Role="PairingStudentPairings" EntitySet="PairingStudentPairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PairingStudentPairing_StudentTable" Association="Self.FK_PairingStudentPairing_StudentTable">
+            <End Role="StudentTables" EntitySet="StudentTables" />
+            <End Role="PairingStudentPairings" EntitySet="PairingStudentPairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Syllabus_GradeSyllabusPairing" Association="Self.FK_Syllabus_GradeSyllabusPairing">
+            <End Role="GradeSyllabusPairings" EntitySet="GradeSyllabusPairings" />
+            <End Role="Syllabus" EntitySet="Syllabus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorStudentRelationship_StudentTable" Association="Self.FK_TutorStudentRelationship_StudentTable">
+            <End Role="StudentTables" EntitySet="StudentTables" />
+            <End Role="TutorStudentRelationships" EntitySet="TutorStudentRelationships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorStudentRelationship_TutorTable" Association="Self.FK_TutorStudentRelationship_TutorTable">
+            <End Role="TutorTables" EntitySet="TutorTables" />
+            <End Role="TutorStudentRelationships" EntitySet="TutorStudentRelationships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_YouTubeSpecific_SubSyllabus" Association="Self.FK_YouTubeSpecific_SubSyllabus">
+            <End Role="SubSyllabus" EntitySet="SubSyllabus" />
+            <End Role="YouTubeSpecifics" EntitySet="YouTubeSpecifics" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SchoolBookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GradeSyllabusPairing">
+          <Key>
+            <PropertyRef Name="GradeID" />
+          </Key>
+          <Property Name="GradeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Grade" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Syllabus" Relationship="Self.FK_Syllabus_GradeSyllabusPairing" FromRole="GradeSyllabusPairings" ToRole="Syllabus" />
+        </EntityType>
+        <EntityType Name="HomeWork">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="HomeWorkID" Type="Int32" Nullable="false" />
+          <Property Name="Questions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Answers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsCorrect" Type="Int32" />
+          <Property Name="Percentage_Correct" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SubSyllabusID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentAnswers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HomeWork_Assign" Relationship="Self.FK_HomeWork_HomeWork_Assign" FromRole="HomeWork" ToRole="HomeWork_Assign" />
+          <NavigationProperty Name="SubSyllabu" Relationship="Self.FK_HomeWork_SubSyllabus" FromRole="HomeWork" ToRole="SubSyllabus" />
+        </EntityType>
+        <EntityType Name="HomeWork_Assign">
+          <Key>
+            <PropertyRef Name="HomeWorkID" />
+          </Key>
+          <Property Name="SubSyllabusID" Type="Int32" Nullable="false" />
+          <Property Name="NoOfQuestions" Type="Int32" Nullable="false" />
+          <Property Name="HomeWorkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="HomeWork" Relationship="Self.FK_HomeWork_HomeWork_Assign" FromRole="HomeWork_Assign" ToRole="HomeWork" />
+          <NavigationProperty Name="SubSyllabu" Relationship="Self.FK__HomeWork___SubSy__35BCFE0A" FromRole="HomeWork_Assign" ToRole="SubSyllabus" />
+          <NavigationProperty Name="HomeWorkParametersStudentPairings" Relationship="Self.FK_HomeWorkParametersStudentPairings_HomeWork_Assign" FromRole="HomeWork_Assign" ToRole="HomeWorkParametersStudentPairings" />
+        </EntityType>
+        <EntityType Name="HomeworkParameter">
+          <Key>
+            <PropertyRef Name="ParametersID" />
+          </Key>
+          <Property Name="ParametersID" Type="Int32" Nullable="false" />
+          <Property Name="NoOfTerms" Type="Int32" />
+          <Property Name="NoOfLawsInUse" Type="Int32" />
+          <Property Name="HighestNumber" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="HighestNumberPow" Type="Int32" />
+          <Property Name="ComplexityID" Type="Int32" />
+          <Property Name="ArithOrGeom" Type="Int32" />
+          <Property Name="highest_a" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="highest_n" Type="Int32" />
+          <Property Name="highest_d" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="highest_r" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="DegreeOfRemoval" Type="Int32" />
+          <Property Name="maxSides" Type="Int32" />
+          <Property Name="AngleOrSide" Type="Int32" />
+          <NavigationProperty Name="HomeWorkParametersStudentPairings" Relationship="Self.FK__HomeWorkP__Param__286302EC" FromRole="HomeworkParameters" ToRole="HomeWorkParametersStudentPairings" />
+        </EntityType>
+        <EntityType Name="HomeWorkParametersStudentPairing">
+          <Key>
+            <PropertyRef Name="PairingID" />
+          </Key>
+          <Property Name="PairingID" Type="Int32" Nullable="false" />
+          <Property Name="ParametersID" Type="Int32" Nullable="false" />
+          <Property Name="HomeWorkID" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="HomeWork_Assign" Relationship="Self.FK_HomeWorkParametersStudentPairings_HomeWork_Assign" FromRole="HomeWorkParametersStudentPairings" ToRole="HomeWork_Assign" />
+          <NavigationProperty Name="HomeworkParameter" Relationship="Self.FK__HomeWorkP__Param__286302EC" FromRole="HomeWorkParametersStudentPairings" ToRole="HomeworkParameters" />
+          <NavigationProperty Name="PairingStudentPairings" Relationship="Self.FK_PairingStudentPairing_HomeWorkParametersStudentPairings" FromRole="HomeWorkParametersStudentPairings" ToRole="PairingStudentPairings" />
+        </EntityType>
+        <EntityType Name="PairingStudentPairing">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PairingID" Type="Int32" Nullable="false" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="HomeWorkParametersStudentPairing" Relationship="Self.FK_PairingStudentPairing_HomeWorkParametersStudentPairings" FromRole="PairingStudentPairings" ToRole="HomeWorkParametersStudentPairings" />
+          <NavigationProperty Name="StudentTable" Relationship="Self.FK_PairingStudentPairing_StudentTable" FromRole="PairingStudentPairings" ToRole="StudentTables" />
+        </EntityType>
+        <EntityType Name="StudentTable">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImgUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AreaCode" Type="Int32" />
+          <Property Name="EmailAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PlaceKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PairingStudentPairings" Relationship="Self.FK_PairingStudentPairing_StudentTable" FromRole="StudentTables" ToRole="PairingStudentPairings" />
+          <NavigationProperty Name="TutorStudentRelationships" Relationship="Self.FK_TutorStudentRelationship_StudentTable" FromRole="StudentTables" ToRole="TutorStudentRelationships" />
+        </EntityType>
+        <EntityType Name="SubSyllabu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="SyllabusID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HomeWork" Relationship="Self.FK_HomeWork_SubSyllabus" FromRole="SubSyllabus" ToRole="HomeWork" />
+          <NavigationProperty Name="HomeWork_Assign" Relationship="Self.FK__HomeWork___SubSy__35BCFE0A" FromRole="SubSyllabus" ToRole="HomeWork_Assign" />
+          <NavigationProperty Name="Syllabu" Relationship="Self.FK__SubSyllab__Sylla__2D27B809" FromRole="SubSyllabus" ToRole="Syllabus" />
+          <NavigationProperty Name="YouTubeSpecifics" Relationship="Self.FK_YouTubeSpecific_SubSyllabus" FromRole="SubSyllabus" ToRole="YouTubeSpecifics" />
+        </EntityType>
+        <EntityType Name="Syllabu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="400" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GradeID" Type="Int32" />
+          <NavigationProperty Name="GradeSyllabusPairing" Relationship="Self.FK_Syllabus_GradeSyllabusPairing" FromRole="Syllabus" ToRole="GradeSyllabusPairings" />
+          <NavigationProperty Name="SubSyllabus" Relationship="Self.FK__SubSyllab__Sylla__2D27B809" FromRole="Syllabus" ToRole="SubSyllabus" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TutorStudentRelationship">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TutorID" Type="Int32" Nullable="false" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StudentTable" Relationship="Self.FK_TutorStudentRelationship_StudentTable" FromRole="TutorStudentRelationships" ToRole="StudentTables" />
+          <NavigationProperty Name="TutorTable" Relationship="Self.FK_TutorStudentRelationship_TutorTable" FromRole="TutorStudentRelationships" ToRole="TutorTables" />
+        </EntityType>
+        <EntityType Name="TutorTable">
+          <Key>
+            <PropertyRef Name="TutorID" />
+          </Key>
+          <Property Name="TutorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ImgUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="AreaCode" Type="Int32" />
+          <Property Name="EmailAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PlaceKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TutorStudentRelationships" Relationship="Self.FK_TutorStudentRelationship_TutorTable" FromRole="TutorTables" ToRole="TutorStudentRelationships" />
+        </EntityType>
+        <EntityType Name="YouTubeSpecific">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubSyllabusID" Type="Int32" Nullable="false" />
+          <Property Name="ImageLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="VideoLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SubSyllabu" Relationship="Self.FK_YouTubeSpecific_SubSyllabus" FromRole="YouTubeSpecifics" ToRole="SubSyllabus" />
+        </EntityType>
+        <Association Name="FK_Syllabus_GradeSyllabusPairing">
+          <End Role="GradeSyllabusPairings" Type="Self.GradeSyllabusPairing" Multiplicity="0..1" />
+          <End Role="Syllabus" Type="Self.Syllabu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradeSyllabusPairings">
+              <PropertyRef Name="GradeID" />
+            </Principal>
+            <Dependent Role="Syllabus">
+              <PropertyRef Name="GradeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HomeWork_HomeWork_Assign">
+          <End Role="HomeWork_Assign" Type="Self.HomeWork_Assign" Multiplicity="1" />
+          <End Role="HomeWork" Type="Self.HomeWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HomeWork_Assign">
+              <PropertyRef Name="HomeWorkID" />
+            </Principal>
+            <Dependent Role="HomeWork">
+              <PropertyRef Name="HomeWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HomeWork_SubSyllabus">
+          <End Role="SubSyllabus" Type="Self.SubSyllabu" Multiplicity="1" />
+          <End Role="HomeWork" Type="Self.HomeWork" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubSyllabus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HomeWork">
+              <PropertyRef Name="SubSyllabusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HomeWork___SubSy__35BCFE0A">
+          <End Role="SubSyllabus" Type="Self.SubSyllabu" Multiplicity="1" />
+          <End Role="HomeWork_Assign" Type="Self.HomeWork_Assign" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubSyllabus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HomeWork_Assign">
+              <PropertyRef Name="SubSyllabusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HomeWorkParametersStudentPairings_HomeWork_Assign">
+          <End Role="HomeWork_Assign" Type="Self.HomeWork_Assign" Multiplicity="1" />
+          <End Role="HomeWorkParametersStudentPairings" Type="Self.HomeWorkParametersStudentPairing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HomeWork_Assign">
+              <PropertyRef Name="HomeWorkID" />
+            </Principal>
+            <Dependent Role="HomeWorkParametersStudentPairings">
+              <PropertyRef Name="HomeWorkID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HomeWorkP__Param__286302EC">
+          <End Role="HomeworkParameters" Type="Self.HomeworkParameter" Multiplicity="1" />
+          <End Role="HomeWorkParametersStudentPairings" Type="Self.HomeWorkParametersStudentPairing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HomeworkParameters">
+              <PropertyRef Name="ParametersID" />
+            </Principal>
+            <Dependent Role="HomeWorkParametersStudentPairings">
+              <PropertyRef Name="ParametersID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PairingStudentPairing_HomeWorkParametersStudentPairings">
+          <End Role="HomeWorkParametersStudentPairings" Type="Self.HomeWorkParametersStudentPairing" Multiplicity="1" />
+          <End Role="PairingStudentPairings" Type="Self.PairingStudentPairing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HomeWorkParametersStudentPairings">
+              <PropertyRef Name="PairingID" />
+            </Principal>
+            <Dependent Role="PairingStudentPairings">
+              <PropertyRef Name="PairingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PairingStudentPairing_StudentTable">
+          <End Role="StudentTables" Type="Self.StudentTable" Multiplicity="1" />
+          <End Role="PairingStudentPairings" Type="Self.PairingStudentPairing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentTables">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="PairingStudentPairings">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorStudentRelationship_StudentTable">
+          <End Role="StudentTables" Type="Self.StudentTable" Multiplicity="1" />
+          <End Role="TutorStudentRelationships" Type="Self.TutorStudentRelationship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentTables">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="TutorStudentRelationships">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SubSyllab__Sylla__2D27B809">
+          <End Role="Syllabus" Type="Self.Syllabu" Multiplicity="1" />
+          <End Role="SubSyllabus" Type="Self.SubSyllabu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Syllabus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SubSyllabus">
+              <PropertyRef Name="SyllabusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_YouTubeSpecific_SubSyllabus">
+          <End Role="SubSyllabus" Type="Self.SubSyllabu" Multiplicity="1" />
+          <End Role="YouTubeSpecifics" Type="Self.YouTubeSpecific" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubSyllabus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="YouTubeSpecifics">
+              <PropertyRef Name="SubSyllabusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TutorStudentRelationship_TutorTable">
+          <End Role="TutorTables" Type="Self.TutorTable" Multiplicity="1" />
+          <End Role="TutorStudentRelationships" Type="Self.TutorStudentRelationship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TutorTables">
+              <PropertyRef Name="TutorID" />
+            </Principal>
+            <Dependent Role="TutorStudentRelationships">
+              <PropertyRef Name="TutorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SchoolBookEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GradeSyllabusPairings" EntityType="Self.GradeSyllabusPairing" />
+          <EntitySet Name="HomeWork" EntityType="Self.HomeWork" />
+          <EntitySet Name="HomeWork_Assign" EntityType="Self.HomeWork_Assign" />
+          <EntitySet Name="HomeworkParameters" EntityType="Self.HomeworkParameter" />
+          <EntitySet Name="HomeWorkParametersStudentPairings" EntityType="Self.HomeWorkParametersStudentPairing" />
+          <EntitySet Name="PairingStudentPairings" EntityType="Self.PairingStudentPairing" />
+          <EntitySet Name="StudentTables" EntityType="Self.StudentTable" />
+          <EntitySet Name="SubSyllabus" EntityType="Self.SubSyllabu" />
+          <EntitySet Name="Syllabus" EntityType="Self.Syllabu" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TutorStudentRelationships" EntityType="Self.TutorStudentRelationship" />
+          <EntitySet Name="TutorTables" EntityType="Self.TutorTable" />
+          <EntitySet Name="YouTubeSpecifics" EntityType="Self.YouTubeSpecific" />
+          <AssociationSet Name="FK_Syllabus_GradeSyllabusPairing" Association="Self.FK_Syllabus_GradeSyllabusPairing">
+            <End Role="GradeSyllabusPairings" EntitySet="GradeSyllabusPairings" />
+            <End Role="Syllabus" EntitySet="Syllabus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HomeWork_HomeWork_Assign" Association="Self.FK_HomeWork_HomeWork_Assign">
+            <End Role="HomeWork_Assign" EntitySet="HomeWork_Assign" />
+            <End Role="HomeWork" EntitySet="HomeWork" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HomeWork_SubSyllabus" Association="Self.FK_HomeWork_SubSyllabus">
+            <End Role="SubSyllabus" EntitySet="SubSyllabus" />
+            <End Role="HomeWork" EntitySet="HomeWork" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HomeWork___SubSy__35BCFE0A" Association="Self.FK__HomeWork___SubSy__35BCFE0A">
+            <End Role="SubSyllabus" EntitySet="SubSyllabus" />
+            <End Role="HomeWork_Assign" EntitySet="HomeWork_Assign" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HomeWorkParametersStudentPairings_HomeWork_Assign" Association="Self.FK_HomeWorkParametersStudentPairings_HomeWork_Assign">
+            <End Role="HomeWork_Assign" EntitySet="HomeWork_Assign" />
+            <End Role="HomeWorkParametersStudentPairings" EntitySet="HomeWorkParametersStudentPairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HomeWorkP__Param__286302EC" Association="Self.FK__HomeWorkP__Param__286302EC">
+            <End Role="HomeworkParameters" EntitySet="HomeworkParameters" />
+            <End Role="HomeWorkParametersStudentPairings" EntitySet="HomeWorkParametersStudentPairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PairingStudentPairing_HomeWorkParametersStudentPairings" Association="Self.FK_PairingStudentPairing_HomeWorkParametersStudentPairings">
+            <End Role="HomeWorkParametersStudentPairings" EntitySet="HomeWorkParametersStudentPairings" />
+            <End Role="PairingStudentPairings" EntitySet="PairingStudentPairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PairingStudentPairing_StudentTable" Association="Self.FK_PairingStudentPairing_StudentTable">
+            <End Role="StudentTables" EntitySet="StudentTables" />
+            <End Role="PairingStudentPairings" EntitySet="PairingStudentPairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorStudentRelationship_StudentTable" Association="Self.FK_TutorStudentRelationship_StudentTable">
+            <End Role="StudentTables" EntitySet="StudentTables" />
+            <End Role="TutorStudentRelationships" EntitySet="TutorStudentRelationships" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubSyllab__Sylla__2D27B809" Association="Self.FK__SubSyllab__Sylla__2D27B809">
+            <End Role="Syllabus" EntitySet="Syllabus" />
+            <End Role="SubSyllabus" EntitySet="SubSyllabus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_YouTubeSpecific_SubSyllabus" Association="Self.FK_YouTubeSpecific_SubSyllabus">
+            <End Role="SubSyllabus" EntitySet="SubSyllabus" />
+            <End Role="YouTubeSpecifics" EntitySet="YouTubeSpecifics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TutorStudentRelationship_TutorTable" Association="Self.FK_TutorStudentRelationship_TutorTable">
+            <End Role="TutorTables" EntitySet="TutorTables" />
+            <End Role="TutorStudentRelationships" EntitySet="TutorStudentRelationships" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SchoolBookModelStoreContainer" CdmEntityContainer="SchoolBookEntities">
+          <EntitySetMapping Name="GradeSyllabusPairings">
+            <EntityTypeMapping TypeName="SchoolBookModel.GradeSyllabusPairing">
+              <MappingFragment StoreEntitySet="GradeSyllabusPairings">
+                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HomeWork">
+            <EntityTypeMapping TypeName="SchoolBookModel.HomeWork">
+              <MappingFragment StoreEntitySet="HomeWork">
+                <ScalarProperty Name="HomeWorkID" ColumnName="HomeWorkID" />
+                <ScalarProperty Name="Questions" ColumnName="Questions" />
+                <ScalarProperty Name="Answers" ColumnName="Answers" />
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="Percentage_Correct" ColumnName="Percentage_Correct" />
+                <ScalarProperty Name="SubSyllabusID" ColumnName="SubSyllabusID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="StudentAnswers" ColumnName="StudentAnswers" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HomeWork_Assign">
+            <EntityTypeMapping TypeName="SchoolBookModel.HomeWork_Assign">
+              <MappingFragment StoreEntitySet="HomeWork_Assign">
+                <ScalarProperty Name="SubSyllabusID" ColumnName="SubSyllabusID" />
+                <ScalarProperty Name="NoOfQuestions" ColumnName="NoOfQuestions" />
+                <ScalarProperty Name="HomeWorkID" ColumnName="HomeWorkID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HomeworkParameters">
+            <EntityTypeMapping TypeName="SchoolBookModel.HomeworkParameter">
+              <MappingFragment StoreEntitySet="HomeworkParameters">
+                <ScalarProperty Name="ParametersID" ColumnName="ParametersID" />
+                <ScalarProperty Name="NoOfTerms" ColumnName="NoOfTerms" />
+                <ScalarProperty Name="NoOfLawsInUse" ColumnName="NoOfLawsInUse" />
+                <ScalarProperty Name="HighestNumber" ColumnName="HighestNumber" />
+                <ScalarProperty Name="HighestNumberPow" ColumnName="HighestNumberPow" />
+                <ScalarProperty Name="ComplexityID" ColumnName="ComplexityID" />
+                <ScalarProperty Name="ArithOrGeom" ColumnName="ArithOrGeom" />
+                <ScalarProperty Name="highest_a" ColumnName="highest_a" />
+                <ScalarProperty Name="highest_n" ColumnName="highest_n" />
+                <ScalarProperty Name="highest_d" ColumnName="highest_d" />
+                <ScalarProperty Name="highest_r" ColumnName="highest_r" />
+                <ScalarProperty Name="DegreeOfRemoval" ColumnName="DegreeOfRemoval" />
+                <ScalarProperty Name="maxSides" ColumnName="maxSides" />
+                <ScalarProperty Name="AngleOrSide" ColumnName="AngleOrSide" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HomeWorkParametersStudentPairings">
+            <EntityTypeMapping TypeName="SchoolBookModel.HomeWorkParametersStudentPairing">
+              <MappingFragment StoreEntitySet="HomeWorkParametersStudentPairings">
+                <ScalarProperty Name="PairingID" ColumnName="PairingID" />
+                <ScalarProperty Name="ParametersID" ColumnName="ParametersID" />
+                <ScalarProperty Name="HomeWorkID" ColumnName="HomeWorkID" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PairingStudentPairings">
+            <EntityTypeMapping TypeName="SchoolBookModel.PairingStudentPairing">
+              <MappingFragment StoreEntitySet="PairingStudentPairings">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PairingID" ColumnName="PairingID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentTables">
+            <EntityTypeMapping TypeName="SchoolBookModel.StudentTable">
+              <MappingFragment StoreEntitySet="StudentTables">
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
+                <ScalarProperty Name="AreaCode" ColumnName="AreaCode" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PlaceKey" ColumnName="PlaceKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubSyllabus">
+            <EntityTypeMapping TypeName="SchoolBookModel.SubSyllabu">
+              <MappingFragment StoreEntitySet="SubSyllabus">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Syllabus">
+            <EntityTypeMapping TypeName="SchoolBookModel.Syllabu">
+              <MappingFragment StoreEntitySet="Syllabus">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SchoolBookModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TutorStudentRelationships">
+            <EntityTypeMapping TypeName="SchoolBookModel.TutorStudentRelationship">
+              <MappingFragment StoreEntitySet="TutorStudentRelationships">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TutorID" ColumnName="TutorID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TutorTables">
+            <EntityTypeMapping TypeName="SchoolBookModel.TutorTable">
+              <MappingFragment StoreEntitySet="TutorTables">
+                <ScalarProperty Name="TutorID" ColumnName="TutorID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
+                <ScalarProperty Name="AreaCode" ColumnName="AreaCode" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="PlaceKey" ColumnName="PlaceKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YouTubeSpecifics">
+            <EntityTypeMapping TypeName="SchoolBookModel.YouTubeSpecific">
+              <MappingFragment StoreEntitySet="YouTubeSpecifics">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SubSyllabusID" ColumnName="SubSyllabusID" />
+                <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
+                <ScalarProperty Name="VideoLink" ColumnName="VideoLink" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

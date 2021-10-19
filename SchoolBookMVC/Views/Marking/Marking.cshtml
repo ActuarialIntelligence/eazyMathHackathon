@@ -1,0 +1,36 @@
+﻿@model List<SchoolBookMVC.ViewModels.MarkingViewModel>
+@{
+    ViewBag.Title = "Marking";
+}
+
+<h2>Marking</h2>
+
+    \[∫_\Δd\bo ω=∫_{∂\Δ}\bo ω\]
+@using (Html.BeginForm("/Marking", "Marking", FormMethod.Post))
+{
+    int i = 0;
+    foreach (var StudentAnswerSet in @Model)
+    {
+        int j = 0;
+        foreach (var answerSet in StudentAnswerSet.Answers)
+        {
+            <br />
+            @Html.Raw("$$")  @answerSet; @Html.Raw("$$")
+            <br />
+            @Html.Raw("$$") @StudentAnswerSet.StudentAnswers[j]; @Html.Raw("$$")
+            <br />
+            @Html.Raw("Incorrect");
+            @Html.CheckBoxFor(model => model[i].TicksAndCrosses[j].Incorrect);<br />
+                @Html.Raw("Correct");
+            @Html.CheckBoxFor(model => model[i].TicksAndCrosses[j].Correct);
+            <br />
+            j++;
+        }
+        i++;
+    }
+    <div style="position:fixed;bottom:0px;left:0px;width:100%;background-color:slategray">
+        <input type="submit" class="button" value="Submit" />
+    </div>
+}
+<br />
+<br />

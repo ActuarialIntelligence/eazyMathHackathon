@@ -1,0 +1,90 @@
+﻿@model SchoolBookMVC.ViewModels.ParameterHomeworkPairingViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <title>ParameterHomeworkPairing</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            @foreach (var snt in Model.studentList)
+            {
+                @:$('#@snt.ID').draggable({ revert: true })
+
+                @:  $("#droppable").droppable({
+                @:               drop: function (event, ui) {
+                @:            var draggable = ui.draggable;
+                @:            var id = draggable.attr("id");
+                @:       $("#" + id).hide();
+                @:       $('#hiddenId').val($('#hiddenId').val() + '|' + id);
+                @:          }
+                @:   });
+
+            }
+
+            });
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm()) 
+    {
+        @Html.AntiForgeryToken()
+        <div style="position:absolute;margin-top:100px">
+            @foreach (var snt in Model.studentList)
+            {
+                @Html.Raw("<div id='" + snt.ID + "' class='img'><img src='" + snt.ImgUrl + "' style='width: 100px; height: 100px; position: auto; margin-left:10px;margin-top:10px'/></div>");
+            }
+            <br />
+        </div>
+        <div id="droppable" class="dropBox">
+            <p></p>
+            <br />
+            @Html.HiddenFor(x => x.StudentIDs, new { id = "hiddenId" });
+        </div>
+        <div class="form-horizontal">
+            <h4>ParameterHomeworkPairingViewModel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.PairingID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PairingID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PairingID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.ParametersID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ParametersID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ParametersID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.HomeWorkID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.HomeWorkID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.HomeWorkID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div style="position:fixed;bottom:0px;left:0px;width:100%;background-color:slategray">
+                <input type="submit" class="button" value="Submit" />
+            </div>
+        </div>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

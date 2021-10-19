@@ -1,0 +1,38 @@
+﻿@model SchoolBookMVC.ViewModels.QuestionsViewModel
+@{
+    ViewBag.Title = "HomeWork";
+}
+    <blockquote>
+        @*If $ax^2+bx+c=0$ with $a≠0$, then: $$x={-b±√{b^2-4ac}}/{2a}$$ $$Csc[x]={{1/{1/(Sin[x])}}*{1/{1/(Sec[x])}}}/{Cos[x]}$$*@
+        @*\[∫_\Δd\bo ω=∫_{∂\Δ}\bo ω\]*@
+
+
+            @foreach (var question in @Model.questions)
+            {
+                <br />
+                @Html.Raw("$$")  @question; @Html.Raw("$$")
+                <br />
+            }
+            <br />
+            <br />
+
+
+            @using (Html.BeginForm("/HomeWorkSubmitted", "HomeWork", FormMethod.Post))
+            {
+                <h2>Answers</h2>
+                var cnt = 0;
+                foreach (var question in @Model.questions)
+                {
+                    Model.answers.Add("");
+                    @Html.TextAreaFor(m => m.answers[cnt],  new {id="txt"+cnt, @class = "text"});
+                    @Html.Raw("<br>");
+                    cnt++;
+                }
+                //Model.preview = true;
+                //Html.EditorFor(model => model.preview);
+                <div style="position:fixed;bottom:0px;left:0px;width:100%;background-color:slategray">
+                    <input type="submit" class="button" value="Submit" />
+                </div>
+            }
+
+        </blockquote>

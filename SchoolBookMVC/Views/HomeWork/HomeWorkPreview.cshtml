@@ -1,0 +1,23 @@
+﻿@model SchoolBookMVC.ViewModels.QuestionsViewModel
+@{
+    ViewBag.Title = "Preview";
+}
+
+<h2>Preview</h2>
+
+<blockquote>
+    @*If $ax^2+bx+c=0$ with $a≠0$, then: $$x={-b±√{b^2-4ac}}/{2a}$$ $$Csc[x]={{1/{1/(Sin[x])}}*{1/{1/(Sec[x])}}}/{Cos[x]}$$*@
+    \[∫_\Δd\bo ω=∫_{∂\Δ}\bo ω\]
+    <br />
+    <br />
+    <br />
+    @using (Html.BeginForm("/HomeWorkSubmitted", "HomeWork", FormMethod.Get))
+    {
+        foreach (var answer in Model.answers)
+        {
+            var result = answer;
+            @Html.Raw("$$")  @result @Html.Raw("$$")
+        }
+    }
+
+</blockquote>

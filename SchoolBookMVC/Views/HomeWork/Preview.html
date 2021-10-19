@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/jqmath-0.css" rel="stylesheet" />
+    <script src="/scripts/jquery-1.js"></script>
+    <script src="/scripts/jqmath-etc-0.js"></script>
+    <script src="/Scripts/modernizr-2.6.2.js"></script>
+    <script>M.MathPlayer = false; M.trustHtml = true;</script>
+    <style>
+        #mathSrc1, #mathSrc2 {
+            font-size: larger;
+            vertical-align: text-bottom
+        }
+
+        table.prec-form-char {
+            text-align: center
+        }
+
+            table.prec-form-char td:first-child {
+                text-align: right
+            }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+
+        <blockquote>
+
+            \[∫_\Δd\bo ω=∫_{∂\Δ}\bo ω\] <a href="/Views/HomeWork/Preview.html">Test</a>
+
+            <br />
+            $$∫x*csc^2 x dx
+            Answer :=x*csc^2 x-- cot x + C$$        <br />
+            <br />
+            $$∫x*arctan x dx
+            Answer :=x*arctan x-x arctan x - {1/2}* ln(1+x^2) + C$$        <br />
+            <br />
+            $$∫x*ln|sec x + tan x| dx
+            Answer :=x*ln|sec x + tan x|-sec x$$        <br />
+            <br />
+            $$∫x*arcsin x dx
+            Answer :=x*arcsin x-x arcsin x + √{1-x^2} + C$$        <br />
+            <br />
+            $$∫x*csc x dx
+            Answer :=x*csc x-- ln|csc x + cot x|$$        <br />
+            <br />
+            $$∫x* sec x tan x dx
+            Answer :=x* sec x tan x-sec x + C$$        <br />
+            <br />
+            <br />
+
+            <form action="/HomeWork/HomeWorkSubmitted" method="post">
+                <h2>Answers</h2>
+<textarea class="text" cols="20" id="txt0" name="answers[0]" rows="2">
+</textarea><br><textarea class="text" cols="20" id="txt1" name="answers[1]" rows="2">
+</textarea><br><textarea class="text" cols="20" id="txt2" name="answers[2]" rows="2">
+</textarea><br><textarea class="text" cols="20" id="txt3" name="answers[3]" rows="2">
+</textarea><br><textarea class="text" cols="20" id="txt4" name="answers[4]" rows="2">
+</textarea><br><textarea class="text" cols="20" id="txt5" name="answers[5]" rows="2">
+</textarea><br>        <input type="submit" class="button" value="Submit" />
+            </form>
+
+
+        </blockquote>
+        <hr />
+
+    </div>
+
+
+    <script>
+        "use strict";
+
+        var ents_ = { nwarr: '\u2196', swarr: '\u2199' };
+        function doMathSrc(n) {
+            var srcE = $('#mathSrc' + n)[0],
+                ms = srcE.value.replace(/&([-#.\w]+);|\\([a-z]+)(?: |(?=[^a-z]))/ig,
+                    function (s, e, m) {
+                        if (m && (M.macros_[m] || M.macro1s_[m])) return s;	// e.g. \it or \sc
+                        var t = '&' + (e || m) + ';', res = $('<span>' + t + '</span>').text();
+                        return res != t ? res : ents_[e || m] || s;
+                    }),
+                h = ms.replace(/</g, '&lt;');
+            if (srcE.value != h) srcE.value = h;	// assignment may clear insertion point
+
+            var t;
+            try {
+                t = M.sToMathE(ms, true);
+            } catch (exc) {
+                t = String(exc);
+            }
+            $('#mathTgt' + n).empty().append(t);
+        }
+
+        function checkUnicodeTitle(event) /* if the event’s target is a 1 or 2 character string, then
+		its unicode code point(s) are made visible */ {
+            var e = event.target, t = e.firstChild;
+            if (e.nodeType == 1 /* Element */ && t && e.lastChild == t && t.nodeType == 3 /* Text */) {
+                var s = t.data, len = s.length;
+                if (0 < len && len <= 2) {
+                    var iToU = function (i) {
+                        var h = s.charCodeAt(i).toString(16).toUpperCase();
+                        while (h.length < 4) h = '0' + h;
+                        return 'U+' + h;
+                    }, u = F.fToA(iToU, len).join(' ');
+                    if (!e.title) e.title = u;
+                    else if (e.title.indexOf(u) == -1) e.title = u + ': ' + e.title;
+                }
+            }
+        }
+        function insertToSrc2(event) /* if the event’s target is a 1 or 2 character string, then
+		it is inserted into $('#mathSrc2') */ {
+            var e = event.target, t = e.firstChild;
+            if (e.nodeType == 1 /* Element */ && t && e.lastChild == t && t.nodeType == 3 /* Text */) {
+                var s = t.data, len = s.length;
+                if (0 < len && len <= 2) {
+                    if (s == '\u2044' /* fraction slash */) {
+                        alert('This buggy "fraction slash" is being replaced by a regular / (U+002F).');
+                        s = '/';
+                    } else if (s == '&') s = '&amp;';
+                    else if (s == '<') s = '&lt;';
+                    else if ($(e).hasClass('no-meta') || $(e).is('.use-backslash *')) s = '\\' + s;
+                    else if ($(e).is('.use-sc *')) s = '\\sc ' + s;
+                    else if ($(e).is('.use-fr *')) s = '\\fr ' + s;
+
+                    var te = $('#mathSrc2')[0];
+                    te.value += s;
+                    te.focus();
+                    var n = te.value.length;
+                    if (te.setSelectionRange) te.setSelectionRange(n, n);
+                    else if (te.createTextRange) {
+                        var range = te.createTextRange();
+                        range.collapse(false);
+                        range.select();
+                    }
+
+                    doMathSrc(2);
+                }
+            }
+        }
+
+);
+    </script>
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+﻿@model SchoolBookMVC.ViewModels.StudentListViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tutor Portal</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <link href="~/Content/TutorPortalStyle.css" rel="stylesheet" />
+    <style>
+        #draggable {
+            width: 150px;
+            height: 150px;
+            padding: 0.5em;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            @foreach (var snt in Model.StudentList)
+            {
+                @:$('#@snt.ID').draggable({ revert: true })
+
+                @:  $("#droppable").droppable({
+                @:               drop: function (event, ui) {
+                @:            var draggable = ui.draggable;
+                @:            var id = draggable.attr("id");
+                @:       $("#" + id).hide();
+                @:       $('#hiddenId').val($('#hiddenId').val() + '|' + id);
+                @:          }
+                @:   });
+
+            }
+
+            });
+    </script>
+</head>
+<body>
+@using (Html.BeginForm("/TutorPortal", "Tutor", FormMethod.Post))
+{
+    <div style="position:absolute;width:100%;height:100px;background-color:white;color:black"><h2 style="margin-left:20px">Home-Work Assign</h2></div>
+    <div style="position:absolute;margin-top:100px">
+        @foreach (var snt in Model.StudentList)
+        {
+            @Html.Raw("<div id='" + snt.ID + "' class='img'><img src='" + snt.ImgUrl + "' style='width: 100px; height: 100px; position: auto; margin-left:10px;margin-top:10px'/></div>");
+        }
+        <br />
+    </div>
+    <br/>
+    <div id="droppable" class="dropBox">
+        <p></p>
+        <br />
+        @Html.HiddenFor(x => x.StudentsAssignedValue, new { id = "hiddenId" });
+    </div>
+    <br/>
+    <br />
+    <br />
+    <div style=" width:100%;background-color:darkslategrey;height:300px">
+        @Html.DropDownListFor(s=>s.SelectedSubSyllabus, new SelectList(Model.SubSyllabus.Select(x => new { Value = x.SubSyllabusID, Text = x.Name }), "Value", "Text"))
+        <br />
+        @Html.TextBoxFor(s => s.NoOfQuestions,new { @class="button"});
+    </div>
+        <div style="position:fixed;bottom:0px;left:0px;width:100%;background-color:slategray">
+            <input type="submit" class="button" value="Submit" />
+        </div>
+
+}
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+﻿.img {
+    height: 140px;
+    width: 140px;
+    opacity: 1;
+    border-radius: 10px;
+    float: left;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+}
+
+.img:hover{
+    opacity:0.7;
+    
+}
+
+.videosDiv {
+    margin-left: auto;
+    margin-right:auto;
+    width: 800px;
+    height: 700px;
+    border-radius: 25px;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+}
+
+.divWithinVideo {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+
+.optionsDiv{
+    width:100%;
+    background-color:gray
+}
+
+
+.videoByIDContainers{
+    float:none;
+}

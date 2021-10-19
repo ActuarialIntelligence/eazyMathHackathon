@@ -1,0 +1,56 @@
+﻿@model SchoolBookMVC.ViewModels.RegistrationViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/RegistrationStyle.css" rel="stylesheet" />
+    <title>Registration</title>
+</head>
+<body>
+@using (Html.BeginForm("/Registration", "Registration", FormMethod.Post))
+{
+    <div class="box">
+        <div class="inside">
+            <br/>
+            <br/>
+            <br/>
+            <br/><p>Name</p>
+            @Html.TextBoxFor(m => m.Name, new { @class = "button" });
+            <br /><p>Displayname</p>
+            @Html.TextBoxFor(m => m.Displayname, new { @class = "button" });
+            <br /><p>EmailAddress</p>
+            @Html.TextBoxFor(m => m.EmailAddress, new { @class = "button" });
+            <br /><p>MobileNumber</p>
+            @Html.TextBoxFor(m => m.MobileNumber, new { @class = "button" });
+            <br /><p>SchoolCode</p>
+            @Html.TextBoxFor(m => m.SchoolCode, new { @class = "button" , id="schoolKey"});
+            <br /><p>ImageUrl</p>
+            @Html.TextBoxFor(m => m.ImageUrl, new { @class = "button" });
+            <br />
+            <br />
+            <br/><p style="color:white">Are you a Tutor? @Html.CheckBoxFor(model => model.StudentOrNot)</p>
+            <br />
+            <br />
+            <input type="submit" class="button" />
+        </div>
+    </div>
+    <div style="margin-bottom:100px;background-color:darkslategrey">
+        <div class="panel">
+            @foreach (var choice in Model.Choices.results)
+            {
+                <div class="text" onclick="$('#schoolKey').val('@Html.Raw(choice.place_id)')">
+                    <p><img src="@choice.icon" height="42" width="42"> @Html.Raw(choice.name)  :  @Html.Raw(choice.place_id)  :  @Html.Raw(choice.geometry.location.lat)  :  @Html.Raw(choice.geometry.location.lng)</p>
+                </div>
+            }
+        </div>
+    </div>
+}
+</body>
+</html>
